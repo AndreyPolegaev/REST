@@ -1,17 +1,19 @@
 package ru.job4j.job4j_auth.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Getter
 @Setter
+@Table(name = "person", schema = "public", catalog = "fullstack_auth")
 @NoArgsConstructor
 public class Person {
 
@@ -20,6 +22,17 @@ public class Person {
     private int id;
     private String login;
     private String password;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    public Person(int id, String login, String password, Employee employee) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.employee = employee;
+    }
 
     @Override
     public boolean equals(Object o) {

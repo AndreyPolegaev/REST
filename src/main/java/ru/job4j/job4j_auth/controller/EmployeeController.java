@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.job4j_auth.domain.Employee;
 import ru.job4j.job4j_auth.domain.Person;
 import ru.job4j.job4j_auth.repository.EmployeeRepository;
+import ru.job4j.job4j_auth.repository.PersonRepository;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -38,14 +36,6 @@ public class EmployeeController {
 
     @PostMapping("/")
     public ResponseEntity<Employee> create(@RequestBody Employee employee) {
-        return new ResponseEntity<Employee>(
-                this.repository.save(employee),
-                HttpStatus.CREATED
-        );
-    }
-
-    @PostMapping("/addNew")
-    public ResponseEntity<Employee> createWithAccount(@RequestBody Employee employee) {
         return new ResponseEntity<Employee>(
                 this.repository.save(employee),
                 HttpStatus.CREATED
